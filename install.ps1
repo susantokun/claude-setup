@@ -167,8 +167,8 @@ try {
     # Penutup -----------------------------------------------------------------
     Write-Host "`nSelesai. Langkah berikutnya:" -ForegroundColor Cyan
     Write-Host '  1. Restart Claude Code, lalu approve MCP server saat diminta.'
-    Write-Host '  2. npx shadcn@latest add field dialog alert-dialog table'
-    Write-Host '  3. npm i @tanstack/react-table'
+    Write-Host '  2. npx shadcn@latest add field dialog alert-dialog table select popover calendar button toast attachment'
+    Write-Host '  3. npm i @tanstack/react-table date-fns'
     if (-not $isLaravel) {
         Write-Host '  4. Cek CLAUDE.md: daftar perintah terlarang masih berisi contoh Laravel.'
     }

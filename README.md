@@ -12,9 +12,13 @@ instruksi tiap kali membuka sesi.
 │   ├── changelog-generator/SKILL.md
 │   ├── git-commit/SKILL.md
 │   ├── shadcnui-alert-dialog/SKILL.md
+│   ├── shadcnui-attachment/SKILL.md
 │   ├── shadcnui-data-table/SKILL.md
+│   ├── shadcnui-date-picker/SKILL.md
 │   ├── shadcnui-dialog/SKILL.md
-│   └── shadcnui-form/SKILL.md
+│   ├── shadcnui-form/SKILL.md
+│   ├── shadcnui-select/SKILL.md
+│   └── shadcnui-toast/SKILL.md
 ├── settings.local.json          # dipakai repo ini, di-gitignore
 └── settings.local.example.json  # template yang ikut ter-commit
 .mcp.json
@@ -30,6 +34,10 @@ install.ps1
 | `shadcnui-dialog` | Modal pakai `Dialog` lengkap (header, title, description, footer), dilarang overlay buatan sendiri | Diminta membuat modal, dialog, popup, form di dalam modal |
 | `shadcnui-alert-dialog` | Konfirmasi pakai `AlertDialog` lengkap dengan Cancel + Action, dilarang `confirm()` | Diminta membuat konfirmasi hapus, logout, reset, aksi tak bisa dibatalkan |
 | `shadcnui-data-table` | Tabel pakai `DataTable` + TanStack Table, pagination dan search wajib ada | Diminta membuat tabel, daftar data, halaman index/list |
+| `shadcnui-select` | Pilihan pakai `Select` shadcn, dilarang `<select>` native | Diminta membuat dropdown, filter status, pilih kategori |
+| `shadcnui-date-picker` | Tanggal pakai `Popover` + `Calendar`, ikon kalender wajib ada | Diminta membuat input tanggal, rentang tanggal, filter periode |
+| `shadcnui-toast` | Setiap aksi diberi umpan balik, aksi async wajib `toast.promise` | Menulis handler simpan, hapus, upload, submit |
+| `shadcnui-attachment` | Lampiran pakai `Attachment`, `state` mengikuti proses upload | Diminta membuat upload file, unggah gambar, daftar lampiran |
 | `git-commit` | Format commit `Prefix(scope): deskripsi` | Sebelum `git commit` atau menulis pesan commit |
 | `changelog-generator` | Menyusun `CHANGELOG.md` dari riwayat git dengan bahasa pengguna | Diminta membuat changelog atau catatan rilis |
 
@@ -187,14 +195,17 @@ dan isinya akan hilang.
 Skill shadcn/ui mengandalkan komponen ini:
 
 ```bash
-npx shadcn@latest add field dialog alert-dialog table
+npx shadcn@latest add field dialog alert-dialog table select popover calendar button toast attachment
 ```
 
-`shadcnui-data-table` juga butuh TanStack Table:
+Ditambah dua paket npm — TanStack Table untuk `shadcnui-data-table`, date-fns
+untuk `shadcnui-date-picker`:
 
 ```bash
-npm i @tanstack/react-table
+npm i @tanstack/react-table date-fns
 ```
+
+`shadcnui-toast` juga perlu `<Toaster />` dipasang sekali di root layout.
 
 Pastikan project cuma punya satu lockfile sebelum menjalankannya. shadcn memilih
 package manager dari lockfile yang ia temukan, jadi repo yang punya
