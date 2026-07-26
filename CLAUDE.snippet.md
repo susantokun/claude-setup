@@ -14,6 +14,18 @@ Tambah komponen dengan `npx shadcn@latest add <komponen>`. Lihat dulu dengan
 `--dry-run`, dan pakai `npx shadcn@latest view @shadcn/<nama>` untuk memeriksa
 isi komponen sebelum menambahkannya.
 
+Kalau ragu bentuk baku sebuah komponen, jangan menebak dari halaman dokumentasi
+— contoh di sana sering disembunyikan di balik tombol "View Code". Ambil sumber
+aslinya:
+
+```
+https://ui.shadcn.com/code/apps/v4/registry/bases/base/ui/<nama>.tsx
+https://ui.shadcn.com/code/apps/v4/registry/bases/base/examples/<nama>-example.tsx
+```
+
+File pertama memuat definisi prop yang sebenarnya, file kedua memuat semua
+varian contoh resmi.
+
 # Package manager
 
 Project ini pakai npm, dan hanya npm. `package-lock.json` adalah satu-satunya

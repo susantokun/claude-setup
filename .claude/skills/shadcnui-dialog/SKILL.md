@@ -11,7 +11,7 @@ Ambil definisi komponen dari MCP `shadcn` sebelum menulis kode. Jangan pakai ing
 2. Struktur wajib lengkap: `Dialog` > `DialogTrigger` > `DialogContent` > `DialogHeader` (`DialogTitle` + `DialogDescription`) > isi > `DialogFooter`.
 3. `DialogTitle` dan `DialogDescription` selalu ada, walau pendek. Keduanya dipakai screen reader.
 4. Base UI: kustom trigger pakai `render={<Button />}`, **bukan** `asChild`. Berlaku juga untuk `DialogClose`.
-5. Tombol batal pakai `DialogClose`, bukan `onClick` yang menutup state manual.
+5. Tombol batal pakai `DialogClose`, bukan `onClick` yang menutup state manual. Jangan pakai `<DialogFooter showCloseButton>` — tombol bawaannya berlabel "Close" dalam bahasa Inggris.
 6. Butuh kontrol dari luar (buka setelah fetch, tutup setelah submit): `<Dialog open={open} onOpenChange={setOpen}>`, trigger boleh dihilangkan.
 7. Isi form di dalam dialog tetap ikut aturan skill `shadcnui-form` (`Field`, bukan `Label`+`Input`).
 8. Jangan atur lebar lewat wrapper. Pakai `className` di `DialogContent` (`sm:max-w-lg`). Sembunyikan tombol silang dengan `showCloseButton={false}`.
