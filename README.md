@@ -11,6 +11,9 @@ instruksi tiap kali membuka sesi.
 ├── skills/
 │   ├── changelog-generator/SKILL.md
 │   ├── git-commit/SKILL.md
+│   ├── shadcnui-alert-dialog/SKILL.md
+│   ├── shadcnui-data-table/SKILL.md
+│   ├── shadcnui-dialog/SKILL.md
 │   └── shadcnui-form/SKILL.md
 └── settings.local.json
 .mcp.json
@@ -22,6 +25,9 @@ CLAUDE.snippet.md
 | Skill | Fungsi | Aktif ketika |
 |---|---|---|
 | `shadcnui-form` | Semua form wajib pakai shadcn/ui `Field`, dilarang `<Label>`+`<Input>` polos | Membuat atau mengubah form, input, halaman create/edit, file `.tsx` |
+| `shadcnui-dialog` | Modal pakai `Dialog` lengkap (header, title, description, footer), dilarang overlay buatan sendiri | Diminta membuat modal, dialog, popup, form di dalam modal |
+| `shadcnui-alert-dialog` | Konfirmasi pakai `AlertDialog` lengkap dengan Cancel + Action, dilarang `confirm()` | Diminta membuat konfirmasi hapus, logout, reset, aksi tak bisa dibatalkan |
+| `shadcnui-data-table` | Tabel pakai `DataTable` + TanStack Table, pagination dan search wajib ada | Diminta membuat tabel, daftar data, halaman index/list |
 | `git-commit` | Format commit `Prefix(scope): deskripsi` | Sebelum `git commit` atau menulis pesan commit |
 | `changelog-generator` | Menyusun `CHANGELOG.md` dari riwayat git dengan bahasa pengguna | Diminta membuat changelog atau catatan rilis |
 
@@ -101,12 +107,18 @@ Kalau project tujuan pakai Laravel Boost, taruh isinya **di luar** blok
 `<laravel-boost-guidelines>` — blok itu ditulis ulang setiap Boost regenerate
 dan isinya akan hilang.
 
-### 5. Pasang komponen Field
+### 5. Pasang komponen yang dipakai skill
 
-`shadcnui-form` mengandalkan komponen `field` dari shadcn:
+Skill shadcn/ui mengandalkan komponen ini:
 
 ```bash
-npx shadcn@latest add field
+npx shadcn@latest add field dialog alert-dialog table
+```
+
+`shadcnui-data-table` juga butuh TanStack Table:
+
+```bash
+npm i @tanstack/react-table
 ```
 
 Pastikan project cuma punya satu lockfile sebelum menjalankannya. shadcn memilih
