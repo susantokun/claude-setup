@@ -15,9 +15,11 @@ instruksi tiap kali membuka sesi.
 │   ├── shadcnui-data-table/SKILL.md
 │   ├── shadcnui-dialog/SKILL.md
 │   └── shadcnui-form/SKILL.md
-└── settings.local.json
+├── settings.local.json          # dipakai repo ini, di-gitignore
+└── settings.local.example.json  # template yang ikut ter-commit
 .mcp.json
 CLAUDE.snippet.md
+install.ps1
 ```
 
 ### Skill
@@ -41,6 +43,10 @@ menjalankan dev server, build, dan tool browser preview, karena itu dijalankan
 sendiri oleh user. File ini bersifat pribadi per mesin dan **harus masuk
 `.gitignore`** di project tujuan.
 
+**`.claude/settings.local.example.json`** — salinan isinya yang sengaja
+di-commit. Karena file aslinya di-gitignore, ia tidak ikut saat repo di-clone,
+jadi installer memakai template ini sebagai sumber.
+
 **`.mcp.json`** — MCP server. Berisi dua entry:
 
 - `shadcn` — akses registry shadcn: cari, lihat, dan pasang komponen lewat
@@ -52,9 +58,76 @@ sendiri oleh user. File ini bersifat pribadi per mesin dan **harus masuk
 shadcn/ui, package manager, dan daftar perintah terlarang. Isinya ditempel ke
 `CLAUDE.md` project, bukan dipakai sebagai file terpisah.
 
+**`install.ps1`** — pemasang otomatis. Menyalin semua yang di atas ke sebuah
+project tanpa menimpa apa pun, dan menyesuaikan isinya dengan jenis project.
+
 ## Cara pasang ke project baru
 
-### 1. Salin skill dan permission
+### Satu baris, tanpa clone
+
+Berdiri di root project tujuan, lalu jalankan:
+
+```powershell
+pwsh -NoProfile -Command "irm https://raw.githubusercontent.com/susantokun/claude-setup/main/install.ps1 | iex"
+```
+
+Baris itu jalan apa adanya di cmd, Cmder, dan PowerShell. Script mengambil repo
+ini ke folder sementara, memasang isinya ke project tempat kamu berdiri, lalu
+menghapus folder sementaranya. Butuh `git` di PATH.
+
+Mau memaksa skill lama tertimpa versi terbaru:
+
+```powershell
+pwsh -NoProfile -Command "& ([scriptblock]::Create((irm https://raw.githubusercontent.com/susantokun/claude-setup/main/install.ps1))) -Force"
+```
+
+### Dari clone lokal
+
+Kalau lebih suka pegang salinannya sendiri:
+
+```bash
+git clone git@github.com:susantokun/claude-setup.git C:/tools/claude-setup
+```
+
+Lalu dari root project mana pun:
+
+```powershell
+& C:/tools/claude-setup/install.ps1
+```
+
+Bedanya cuma sumbernya. Versi ini juga ikut menyalin `settings.local.json`
+milikmu sendiri kalau ada; versi satu baris memakai
+`settings.local.example.json` yang ter-commit.
+
+### Yang dilakukan installer
+
+Menyalin semua skill, memasang `settings.local.json` dan mendaftarkannya ke
+`.gitignore`, menggabungkan `.mcp.json`, dan menempelkan konvensi ke `CLAUDE.md`.
+
+Yang perlu diketahui:
+
+- **Tidak menimpa apa pun.** File dan skill yang sudah ada dilewati dan
+  dilaporkan. Mau menimpa skill dengan versi terbaru: tambahkan `-Force`.
+- **Aman diulang.** Menjalankan dua kali tidak menggandakan isi `.gitignore`,
+  `.mcp.json`, atau `CLAUDE.md`.
+- **Menyesuaikan jenis project.** Kalau tidak ada file `artisan`, entry
+  `laravel-boost` dilewati dan path komponen di `CLAUDE.md` ditulis
+  `src/components/ui`, bukan `resources/js/components/ui`.
+- **Update belakangan** cukup jalankan ulang dengan `-Force` di project yang mau
+  ikut versi baru. Kalau pakai clone lokal, `git pull` dulu.
+
+Flag lain: `-Path <dir>` untuk menunjuk project tanpa pindah direktori,
+`-SkipMcp` dan `-SkipClaudeMd` kalau dua file itu mau diurus manual.
+
+Sesudahnya, **restart Claude Code** supaya MCP server terbaca, lalu pasang
+komponen shadcn (lihat bagian di bawah).
+
+### Kalau mau manual
+
+<details>
+<summary>Langkah per file, tanpa installer</summary>
+
+#### 1. Salin skill dan permission
 
 ```bash
 cp -r .claude /path/ke/project-baru/
@@ -67,7 +140,7 @@ supaya skill bawaan yang sudah ada tidak tertimpa:
 cp -r .claude/skills/shadcnui-form /path/ke/project-baru/.claude/skills/
 ```
 
-### 2. Kecualikan permission dari git
+#### 2. Kecualikan permission dari git
 
 `settings.local.json` khusus mesinmu, jangan sampai ikut ter-commit:
 
@@ -75,7 +148,7 @@ cp -r .claude/skills/shadcnui-form /path/ke/project-baru/.claude/skills/
 echo "/.claude/settings.local.json" >> /path/ke/project-baru/.gitignore
 ```
 
-### 3. Pasang MCP server
+#### 3. Pasang MCP server
 
 Salin `.mcp.json` ke root project. Kalau project sudah punya file itu,
 **jangan ditimpa** — tambahkan entry-nya ke dalam `mcpServers` yang sudah ada:
@@ -94,7 +167,7 @@ Salin `.mcp.json` ke root project. Kalau project sudah punya file itu,
 MCP server baru hanya dibaca saat startup, jadi **restart Claude Code** dan
 approve server-nya saat diminta.
 
-### 4. Tempel konvensi ke CLAUDE.md
+#### 4. Tempel konvensi ke CLAUDE.md
 
 ```bash
 cat CLAUDE.snippet.md >> /path/ke/project-baru/CLAUDE.md
@@ -107,7 +180,9 @@ Kalau project tujuan pakai Laravel Boost, taruh isinya **di luar** blok
 `<laravel-boost-guidelines>` — blok itu ditulis ulang setiap Boost regenerate
 dan isinya akan hilang.
 
-### 5. Pasang komponen yang dipakai skill
+</details>
+
+### Pasang komponen yang dipakai skill
 
 Skill shadcn/ui mengandalkan komponen ini:
 

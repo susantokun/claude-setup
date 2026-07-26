@@ -1,0 +1,33 @@
+{
+    "$schema": "https://json.schemastore.org/claude-code-settings.json",
+    "permissions": {
+        "deny": [
+            "mcp__Claude_Browser",
+            "mcp__claude-in-chrome",
+            "Bash(npm run dev)",
+            "Bash(npm run dev:*)",
+            "Bash(npm run build)",
+            "Bash(npm run build:*)",
+            "Bash(npm start)",
+            "Bash(composer run dev)",
+            "Bash(npx vite)",
+            "Bash(npx vite *)",
+            "Bash(vite)",
+            "Bash(vite *)",
+            "Bash(php artisan serve)",
+            "Bash(php artisan serve *)",
+            "PowerShell(npm run dev)",
+            "PowerShell(npm run dev:*)",
+            "PowerShell(npm run build)",
+            "PowerShell(npm run build:*)",
+            "PowerShell(npm start)",
+            "PowerShell(composer run dev)",
+            "PowerShell(npx vite)",
+            "PowerShell(npx vite *)",
+            "PowerShell(vite)",
+            "PowerShell(vite *)",
+            "PowerShell(php artisan serve)",
+            "PowerShell(php artisan serve *)"
+        ]
+    }
+}
